@@ -3,6 +3,7 @@ const temperature = document.querySelector(".temp");
 const city = document.querySelector(".city");
 const country_name = document.querySelector(".country_name");
 const icon = document.querySelector(".element");
+const time = document.querySelector(".time");
 const cloudy_lightning = `
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 48.7" style="enable-background:new 0 0 60.7 48.7;" xml:space="preserve">
             <g id="Cloud_4"><g id="White_cloud_4"><path id="XMLID_69_" class="white" d="M47.2,40H7.9C3.5,40,0,36.5,0,32.1l0,0c0-4.3,3.5-7.9,7.9-7.9h39.4c4.3,0,7.9,3.5,7.9,7.9v0 C55.1,36.5,51.6,40,47.2,40z"/>
@@ -235,5 +236,13 @@ async function getWeather(country) {
         icon.innerHTML = night;
     }
     console.log(weatherIcon);
+    const timeZoneOffsetSeconds = data.timezone;
+    const now = new Date();
+    const localTime = new Date(now.getTime() + timeZoneOffsetSeconds * 1000);
+    const hours = localTime.getUTCHours().toString().padStart(2, "0");
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
+    const seconds = localTime.getUTCSeconds().toString().padStart(2, "0");
+    console.log(`${hours} ${minutes} ${seconds}`);
+    time.innerHTML = `${hours}:${minutes}`;
     document.getElementById("country").value = "";
 }
