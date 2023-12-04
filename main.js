@@ -190,7 +190,9 @@ const snow = `
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const country = document.getElementById("country").value;
+    const container = document.querySelector(".container");
     if (country !== null && country !== "") {
+        container.classList.remove("hidden");
         getWeather(country);
     } else {
         console.log("u need to add city");
@@ -206,7 +208,7 @@ async function getWeather(country) {
     const countryName = data.sys.country;
     const cityName = data.name;
     const weatherIcon = data.weather[0].main;
-    temperature.innerHTML = temp;
+    temperature.innerHTML = Math.round(temp);
     temperature.append("°C");
     city.textContent = cityName;
     city.append(",");
@@ -221,7 +223,8 @@ async function getWeather(country) {
         weatherIcon === "Snow" ||
         weatherIcon === "Mist" ||
         weatherIcon === "Haze" ||
-        weatherIcon === "Smoke"
+        weatherIcon === "Smoke" ||
+        weatherIcon === "Fog"
     ) {
         icon.innerHTML = snow;
     } else if (weatherIcon === "Few Clouds " || weatherIcon === "Clouds") {
@@ -231,4 +234,6 @@ async function getWeather(country) {
     } else {
         icon.innerHTML = night;
     }
+    console.log(weatherIcon);
+    document.getElementById("country").value = "";
 }

@@ -33,6 +33,10 @@ body {
     border-radius: 10px;
 }
 
+.hidden {
+    display: none;
+}
+
 .elements {
     display: flex;
     justify-content: center;
