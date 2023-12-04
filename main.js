@@ -210,11 +210,26 @@ async function getWeather(country) {
     const countryName = data.sys.country;
     const cityName = data.name;
     const weatherIcon = data.weather[0].main;
+    const timeZoneOffsetSeconds = data.timezone;
     temperature.innerHTML = Math.round(temp);
     temperature.append("°C");
     city.textContent = cityName;
     city.append(",");
     country_name.innerHTML = countryName;
+    changeIcon(weatherIcon);
+    changeTime(timeZoneOffsetSeconds);
+    document.getElementById("country").value = "";
+}
+
+function changeTime(timeZoneOffsetSeconds) {
+    const now = new Date();
+    const localTime = new Date(now.getTime() + timeZoneOffsetSeconds * 1000);
+    const hours = localTime.getUTCHours().toString().padStart(2, "0");
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
+    time.innerHTML = `${hours}:${minutes}`;
+}
+
+function changeIcon(weatherIcon) {
     if (
         weatherIcon === "Rain" ||
         weatherIcon === "Thunderstorm" ||
@@ -236,14 +251,4 @@ async function getWeather(country) {
     } else {
         icon.innerHTML = night;
     }
-    console.log(weatherIcon);
-    const timeZoneOffsetSeconds = data.timezone;
-    const now = new Date();
-    const localTime = new Date(now.getTime() + timeZoneOffsetSeconds * 1000);
-    const hours = localTime.getUTCHours().toString().padStart(2, "0");
-    const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
-    const seconds = localTime.getUTCSeconds().toString().padStart(2, "0");
-    console.log(`${hours} ${minutes} ${seconds}`);
-    time.innerHTML = `${hours}:${minutes}`;
-    document.getElementById("country").value = "";
 }
